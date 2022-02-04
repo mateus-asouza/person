@@ -64,9 +64,11 @@
       }
     ```
 ## Informações Uteis
-  - @RestController: retorna o objeto e os dados do objeto são gravados diretamente na resposta HTTP como JSON.
-  - @RequestMapping: mapeia um caminho de requisições.
-  - @AllArgsConstructor(onConstructor = @__(@Autowired)): Gera um construtor all-args e injeta a anotação @Autowired no construtor.
+
+- @RestController: retorna o objeto e os dados do objeto são gravados diretamente na resposta HTTP como JSON.
+- @RequestMapping("/api/v1/people"): mapeia um caminho de requisições.
+- @AllArgsConstructor(onConstructor = @__(@Autowired)): Gera um construtor all-args e injeta a anotação @Autowired no
+  construtor.
   - @PostMapping: Anotação para mapear solicitações HTTP POST em métodos de manipulador específicos.
   - @RequestBody: O Spring desserializa automaticamente o JSON em um tipo Java, supondo que um apropriado seja especificado. Por padrão, o tipo que anotamos com a anotação @RequestBody deve corresponder ao JSON enviado do nosso controlador do lado do cliente.
   - @Valid: Irá executar a validação de todas as anotações da classe.

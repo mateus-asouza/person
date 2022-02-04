@@ -1,8 +1,6 @@
 package com.ms.personApi.dto.request;
 
 
-
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,9 +11,8 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.time.LocalDate;
-import java.util.List;
 
+import java.util.List;
 
 @Data
 @Builder
@@ -34,7 +31,7 @@ public class PersonDto {
     private String cpf;
 
     @NotNull
-    private LocalDate birthDay;
+    private String birthDay;
 
     @Valid
     @NotEmpty

@@ -1,22 +1,20 @@
 package com.ms.personApi.controller;
 
+import com.ms.personApi.exception.PersonNotFoundException;
 import lombok.AllArgsConstructor;
 import com.ms.personApi.dto.request.PersonDto;
 import com.ms.personApi.dto.response.MessageResponseDTO;
 import com.ms.personApi.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
-@RestController //retorna o objeto e os dados do objeto são gravados diretamente na resposta HTTP como JSON.
-@RequestMapping("/api/v1/people")//mapeia um caminho de requisições.
-@AllArgsConstructor(onConstructor = @__(@Autowired))//Gera um construtor all-args e injeta a anotação @Autowired no construtor.
+@RestController
+@RequestMapping("/api/v1/people")
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class PersonController {
 
     private PersonService personService;//injeção de dependência interface PersonService.
@@ -31,4 +29,29 @@ public class PersonController {
     public MessageResponseDTO createPerson(@RequestBody @Valid PersonDto personDto) {
         return personService.createPerson(personDto);
     }
+
+    //Retorna uma lista com todos os registros.
+    @GetMapping
+    public List<PersonDto> getPeople() {
+        return personService.listAll();
+    }
+
+    //Pesquisa um registro pelo id e retorna o registro com o id informado.
+    @GetMapping("/{id}")
+    public PersonDto getPerson(@PathVariable Long id) throws PersonNotFoundException {
+        return personService.getPersonById(id);
+    }
+
+    //Atualiza um registro correspondente ao id informado.
+    @PutMapping("/{id}")
+    public MessageResponseDTO updatePersonById(@PathVariable Long id, @RequestBody @Valid PersonDto personDto) throws PersonNotFoundException {
+        return personService.updatePersonById(id, personDto);
+    }
+
+    //Deleta um registro correspondente ao id informado.
+    @DeleteMapping("/{id}")
+    public MessageResponseDTO deletePerson(@PathVariable Long id) throws PersonNotFoundException {
+        return personService.deletePerson(id);
+    }
+
 }
