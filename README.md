@@ -15,15 +15,15 @@
    git clone "repositorio gitHub"
    ```
 2. Vá na opção Project from Existing Sources.
-![alt text](https://github.com/mateus-asouza/personApi/tree/master/src/main/.github/images/Screenshot_1.png)
+![alt text](https://github.com/mateus-asouza/personApi/blob/master/src/main/.github/images/Screenshot_1.png?raw=true)
 3. Escolha aoção Maven e clique em finish.
-   ![alt text](https://github.com/mateus-asouza/personApi/tree/master/src/main/.github/images/Screenshot_2.png)
+   ![alt text](https://github.com/mateus-asouza/personApi/blob/master/src/main/.github/images/Screenshot_2.png?raw=true)
 4. Clique na aba run > Edit Configuration.
-   ![alt text](https://github.com/mateus-asouza/personApi/tree/master/src/main/.github/images/Screenshot_3.png)
+   ![alt text](https://github.com/mateus-asouza/personApi/blob/master/src/main/.github/images/Screenshot_3.png?raw=true)
 5. Configure um aplication como na imagem e clique em ok.
-   ![alt text](https://github.com/mateus-asouza/personApi/tree/master/src/main/.github/images/Screenshot_4.png)
+   ![alt text](https://github.com/mateus-asouza/personApi/blob/master/src/main/.github/images/Screenshot_4.png?raw=true)
 6. Execute o comando mcn clean install.
-   ![alt text](https://github.com/mateus-asouza/personApi/tree/master/src/main/.github/images/Screenshot_5.png)
+   ![alt text](https://github.com/mateus-asouza/personApi/blob/master/src/main/.github/images/Screenshot_5.png?raw=true)
 7. Inicie a aplicação.
 
 ## Utilização do lombok
