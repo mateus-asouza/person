@@ -3,7 +3,7 @@ package com.ms.personApi.controller;
 import com.ms.personApi.exception.PersonNotFoundException;
 import lombok.AllArgsConstructor;
 import com.ms.personApi.dto.request.PersonDto;
-import com.ms.personApi.dto.response.MessageResponseDTO;
+import com.ms.personApi.dto.response.messageResponseDTO;
 import com.ms.personApi.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,7 +26,7 @@ public class PersonController {
     */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public MessageResponseDTO createPerson(@RequestBody @Valid PersonDto personDto) {
+    public messageResponseDTO createPerson(@RequestBody @Valid PersonDto personDto) {
         return personService.createPerson(personDto);
     }
 
@@ -44,13 +44,13 @@ public class PersonController {
 
     //Atualiza um registro correspondente ao id informado.
     @PutMapping("/{id}")
-    public MessageResponseDTO updatePersonById(@PathVariable Long id, @RequestBody @Valid PersonDto personDto) throws PersonNotFoundException {
+    public messageResponseDTO updatePersonById(@PathVariable Long id, @RequestBody @Valid PersonDto personDto) throws PersonNotFoundException {
         return personService.updatePersonById(id, personDto);
     }
 
     //Deleta um registro correspondente ao id informado.
     @DeleteMapping("/{id}")
-    public MessageResponseDTO deletePerson(@PathVariable Long id) throws PersonNotFoundException {
+    public messageResponseDTO deletePerson(@PathVariable Long id) throws PersonNotFoundException {
         return personService.deletePerson(id);
     }
 

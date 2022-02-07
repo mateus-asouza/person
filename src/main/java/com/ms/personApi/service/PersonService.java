@@ -1,7 +1,7 @@
 package com.ms.personApi.service;
 
 import com.ms.personApi.dto.request.PersonDto;
-import com.ms.personApi.dto.response.MessageResponseDTO;
+import com.ms.personApi.dto.response.messageResponseDTO;
 import com.ms.personApi.entity.Person;
 import com.ms.personApi.exception.PersonNotFoundException;
 import com.ms.personApi.mapper.PersonMapper;
@@ -24,7 +24,7 @@ public class PersonService {
     //Mapea personDto para Person atraves do metodo toModel do PersonMapper e armazena na variável personToSave,
     //persiste o objeto no banco de dados atraves so metodo personRepository.save passando o onjeto convertido como parametro e retorna uma messagem
     //infrmando que o registro foi criado.
-    public MessageResponseDTO createPerson(PersonDto personDto) {
+    public messageResponseDTO createPerson(PersonDto personDto) {
         Person personToSave = personMapper.toModel(personDto);
         Person savedPerson = personRepository.save(personToSave);
         return createMessageResponse(savedPerson.getId(), "Created person with ID ");
@@ -51,7 +51,7 @@ public class PersonService {
     //Verifica se existe um registro correspondente ao id passado, o metodo personMapper converto o personDto passado por paramentro em Person
     //e atribui a variavel personToUpadte, o metodo personRepository.save atualiza o registro no BD e armazena o objeto na varivel updatedPerson,
     //por fim o metodo retorna uma mensagem informando que o registro foi atualizado, caso contrario retorna uma exception.
-    public MessageResponseDTO updatePersonById(Long id, PersonDto personDto) throws PersonNotFoundException {
+    public messageResponseDTO updatePersonById(Long id, PersonDto personDto) throws PersonNotFoundException {
         verifyIfExists(id);
         Person personToUpdate = personMapper.toModel(personDto);
         Person updatedPerson = personRepository.save(personToUpdate);
@@ -61,7 +61,7 @@ public class PersonService {
     //Verifica se existe um registro correspondente ao id passado e atribui o objeto a variavel personToDelete, o metodo
     //personRepository.delete deleta o registro correspondende ao valor da variavel personToDelete e por fim
     //retorna uma mensagem informando que o registro foi deletado, caso contrario retorna uma exception.
-    public MessageResponseDTO deletePerson(Long id) throws PersonNotFoundException {
+    public messageResponseDTO deletePerson(Long id) throws PersonNotFoundException {
         Person personToDelete = verifyIfExists(id);
         personRepository.delete(personToDelete);
         return createMessageResponse(personToDelete.getId(), "Deleted person with id ");
@@ -74,8 +74,8 @@ public class PersonService {
     }
 
     //formata uma mensagem response
-    private MessageResponseDTO createMessageResponse(Long id, String message) {
-        return MessageResponseDTO
+    private messageResponseDTO createMessageResponse(Long id, String message) {
+        return messageResponseDTO
                 .builder()
                 .message(message + id)
                 .build();
