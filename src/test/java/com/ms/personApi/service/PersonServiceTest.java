@@ -43,6 +43,7 @@ public class PersonServiceTest {
     Person person = createFakeEntity();
 
 
+    //teste Unitário metodo personService.createPerson
     @Test
     void testGivenPersonDtoThenReturnSavedMessage() {
 
@@ -55,6 +56,7 @@ public class PersonServiceTest {
         assertEquals(expecteSeccessMessage, successMessage);
     }
 
+    //teste Unitário metodo personService.listAll();
     @Test
     void testGivenPersonDtoThenReturnListOfPeople() {
 
@@ -72,6 +74,7 @@ public class PersonServiceTest {
         assertEquals(expectedListDto, successListPeopleDto);
     }
 
+    //teste Unitário metodo personService.getPersonById();
     @Test
     void testGivenPersonIdThenReturnPerson() throws PersonNotFoundException {
         when(personRepository.findById(person.getId())).thenReturn(Optional.of(person));
@@ -83,6 +86,7 @@ public class PersonServiceTest {
         assertEquals(expectedReturnedPersonDto, successRetunedPersonDto);
     }
 
+    //teste Unitário metodo personService.updatePersonById();
     @Test
     void testGivenPersonIdAndPersonThenUpdatePerson() throws PersonNotFoundException {
         when(personRepository.findById(person.getId())).thenReturn(Optional.of(person));
@@ -93,6 +97,7 @@ public class PersonServiceTest {
         assertEquals(expecteSeccessMessage, successMessage);
     }
 
+    //teste Unitário metodo personService.deletePerson();
     @Test
     void testGivenPersonIdThenDelete() throws PersonNotFoundException {
         when(personRepository.findById(person.getId())).thenReturn(Optional.of(person));
@@ -103,6 +108,7 @@ public class PersonServiceTest {
         assertEquals(expectedMessage, successMessage);
     }
 
+    //metodo para criar mensagem de resposta.
     private messageResponseDTO createExpectedMessageResponse(Long id, String message) {
         return messageResponseDTO
                 .builder()

@@ -1,5 +1,6 @@
 ## Descrição do Projeto
-- Uma API REST que permite cadastrar clientes do sistema.
+- Uma API REST que permite cadastrar, atualizar, listar e deletar clientes do sistema.
+- Api upada na Heroku, url para acesso: https://ms-personapi-rest.herokuapp.com/api/v1/people
 
 ## Tecnologias Usadas
 - Maven versão 3.8.4.
