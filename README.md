@@ -53,7 +53,7 @@
 ## Metodos
 
 - ### POST
-    - Request (/api/v1/person)
+    - Request (/api/v1/people)
         - Rquest Body
       ```
         {
@@ -80,12 +80,12 @@
         - Response
        ```
        {
-        "message": "Created person with ID 1"
+        "message": "Created customer with ID 1"
         }
       ```
 
 - ### GET
-    - Request (/api/v1/person)
+    - Request (/api/v1/customer)
         - Rquest Body
 
         - Response
@@ -119,7 +119,7 @@
 ```
 
 - ### GET by ID
-    - Request (/api/v1/person/{id})
+    - Request (/api/v1/customer/{id})
         - Rquest Body
 
         - Response
@@ -152,7 +152,7 @@
 ```
 
 - ### PUT
-    - Request (/api/v1/person/{id})
+    - Request (/api/v1/customer/{id})
         - Rquest Body
 
 ```
@@ -185,19 +185,19 @@
 
 ```
 {
-    "message": "Updated person with id 1"
+    "message": "Updated customer with id 1"
 }
 ```
 
 - ### DELETE
-    - Request (/api/v1/person/{id})
+    - Request (/api/v1/customer/{id})
         - Rquest Body
 
         - Response
 
 ```
 {
-    "message": "Deleted person with id 1"
+    "message": "Deleted customer with id 1"
 }
 
 ```

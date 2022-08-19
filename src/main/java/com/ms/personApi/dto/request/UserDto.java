@@ -1,24 +1,27 @@
 package com.ms.personApi.dto.request;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
-
+import java.util.List;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PhoneDto {
+public class UserDto {
 
     private Long id;
 
-    @NotEmpty
-    @Size( max = 14)
-    private String phoneNumber;
 
+    private String login;
+
+
+    private String password;
+
+    private List<CustomerDto> customerDtos;
 }

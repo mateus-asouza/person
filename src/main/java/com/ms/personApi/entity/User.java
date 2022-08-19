@@ -5,25 +5,28 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
-
+import java.util.List;
 
 @Entity
+@DynamicUpdate
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Table(name = "PHONE")
-public class Phone {
-
+@Table(name = "LOGIN")
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "LOGIN_ID")
     private Long id;
-
-    @Column(nullable = false)
-    private String phoneNumber;
+    @Column(unique = true,name = "LOGIN_NAME")
+    private String login;
+    @Column(name = "PASSWORD")
+    private String password;
 
 
 }
