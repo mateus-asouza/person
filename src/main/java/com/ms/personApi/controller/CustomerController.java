@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -41,42 +42,46 @@ public class CustomerController {
     public Page<Customer> search(@RequestParam(required = false) String dataCriacao,
                                  @RequestParam(required = false) String nomeOrRazaoSocial,
                                  @RequestParam(required = false) String cpfOrCnpj,
-                                 @RequestParam boolean isCnpj,
+                                 @RequestParam String isCpfOrCnpj,
                                  @RequestParam(value = "page",
                                          required = false,
                                          defaultValue = "0") int page,
                                  @RequestParam(value = "size",
                                          required = false,
                                          defaultValue = "10") int size) {
-        if(isCnpj){
-         return customerService.serachLegalCustomer(dataCriacao,nomeOrRazaoSocial,cpfOrCnpj,page,size);
-        }
-        return customerService.serachPhysicalCustomer(dataCriacao,nomeOrRazaoSocial,cpfOrCnpj,page,size);
 
+        if(Objects.equals(isCpfOrCnpj, "cpf")){
+        return customerService.serachPhysicalCustomer(dataCriacao,nomeOrRazaoSocial,cpfOrCnpj,page,size);
+        }else if(Objects.equals(isCpfOrCnpj, "cnpj")){
+
+         return customerService.serachLegalCustomer(dataCriacao,nomeOrRazaoSocial,cpfOrCnpj,page,size);
+
+        }
+        return customerService.findAll(page,size);
     }
 
     //Retorna uma lista com todos os registros.
     @GetMapping
-    public List<CustomerDto> getPeople() {
+    public List<CustomerDto> getCustomers() {
         return customerService.listAll();
     }
 
     //Pesquisa um registro pelo id e retorna o registro com o id informado.
     @GetMapping("/{id}")
-    public CustomerDto getPerson(@PathVariable Long id) throws PersonNotFoundException {
-        return customerService.getPersonById(id);
+    public CustomerDto getCustomerById(@PathVariable Long id) throws PersonNotFoundException {
+        return customerService.getCustomerById(id);
     }
 
     //Atualiza um registro correspondente ao id informado.
     @PutMapping("/{id}")
-    public messageResponseDTO updatePersonById(@PathVariable Long id, @RequestBody @Valid CustomerDto customerDto) throws PersonNotFoundException {
-        return customerService.updatePersonById(id, customerDto);
+    public messageResponseDTO updateCustomerById(@PathVariable Long id, @RequestBody @Valid CustomerDto customerDto) throws PersonNotFoundException {
+        return customerService.updateCustomerById(id, customerDto);
     }
 
     //Deleta um registro correspondente ao id informado.
     @DeleteMapping("/{id}")
-    public messageResponseDTO deletePerson(@PathVariable Long id) throws PersonNotFoundException {
-        return customerService.deletePerson(id);
+    public messageResponseDTO deleteCustomerById(@PathVariable Long id) throws PersonNotFoundException {
+        return customerService.deleteCustomerById(id);
     }
 
 }

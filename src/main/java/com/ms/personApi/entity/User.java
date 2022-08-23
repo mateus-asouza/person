@@ -20,7 +20,7 @@ import java.util.List;
 @Table(name = "LOGIN")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "LOGIN_ID")
     private Long id;
     @Column(unique = true,name = "LOGIN_NAME")

@@ -13,18 +13,20 @@ import org.springframework.stereotype.Repository;
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
     /*@Query("SELECT c FROM Customer c INNER JOIN  PhysicalCustomer p WHERE c.dataCriacao LIKE %:dataCriacao% \n" +
             "AND p.name LIKE %:name% AND p.cpf LIKE  %:cpf%")*/
-    @Query(value = "SELECT * FROM CUSTOMER c INNER JOIN PHYSICAL_CUSTOMER p ON c.PHYSICAL_CUSTOMER_ID = p.CPF", nativeQuery = true)
+    @Query(value = "SELECT * FROM CUSTOMER C INNER JOIN PHYSICAL_CUSTOMER P ON C.PHYSICAL_CUSTOMER_ID = P.CPF" +
+            " WHERE C.DATA_CRIACAO LIKE :dataCriacao AND P.PHYSICAL_CUSTOMER_NAME  LIKE :name AND P.CPF LIKE :cpf", nativeQuery = true)
     Page<Customer> searchPhysicalCustomer(
             @Param("dataCriacao") String dataCriacao,
             @Param("name") String name,
             @Param("cpf") String cpf,
             Pageable pageable);
-    @Query("SELECT c FROM Customer c INNER JOIN  c.legalCustomer p  WHERE c.dataCriacao  LIKE %:dataCriacao% \n" +
-            "AND p.corporateName    LIKE %:name% AND p.cnpj  LIKE  %:cpf%")
+
+  @Query(value = "SELECT * FROM CUSTOMER C INNER JOIN LEGAL_CUSTOMER L ON C.LEGAL_CUSTOMER_ID = L.CNPJ" +
+            " WHERE C.DATA_CRIACAO LIKE :dataCriacao AND L.CORPORATE_NAME LIKE :corporateName AND L.CNPJ LIKE :cnpj", nativeQuery = true)
     Page<Customer> searchLegalCustomer(
-            @Param("dataCriacao") String dataCriacao,
-            @Param("name") String name,
-            @Param("cpf") String cpf,
+          @Param("dataCriacao") String dataCriacao,
+          @Param("corporateName") String corporateName,
+          @Param("cnpj") String cnpj,
             Pageable pageable);
 
 }

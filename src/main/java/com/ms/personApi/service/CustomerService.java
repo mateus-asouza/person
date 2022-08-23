@@ -63,7 +63,7 @@ public class CustomerService {
     //Recebe um id, cria um a variável do tipo Person que recebe a chamda do metodo verifyIfExists passando o id,
     //o mesmo pesquisa um registro correspondente ao id passado e atribui o objeto a variavel,
     //apos isso o metodo getPersonById retorna o valor de person convetido para PersonDto.
-    public CustomerDto getPersonById(Long id) throws PersonNotFoundException {
+    public CustomerDto getCustomerById(Long id) throws PersonNotFoundException {
         Customer customer = verifyIfExists(id);
         return customerMapper.toDTO(customer);
     }
@@ -71,7 +71,7 @@ public class CustomerService {
     //Verifica se existe um registro correspondente ao id passado, o metodo personMapper converto o personDto passado por paramentro em Person
     //e atribui a variavel personToUpadte, o metodo personRepository.save atualiza o registro no BD e armazena o objeto na varivel updatedPerson,
     //por fim o metodo retorna uma mensagem informando que o registro foi atualizado, caso contrario retorna uma exception.
-    public messageResponseDTO updatePersonById(Long id, CustomerDto customerDto) throws PersonNotFoundException {
+    public messageResponseDTO updateCustomerById(Long id, CustomerDto customerDto) throws PersonNotFoundException {
         verifyIfExists(id);
         Customer customerToUpdate = customerMapper.toModel(customerDto);
         Customer updatedCustomer = customerRepository.save(customerToUpdate);
@@ -81,7 +81,7 @@ public class CustomerService {
     //Verifica se existe um registro correspondente ao id passado e atribui o objeto a variavel personToDelete, o metodo
     //personRepository.delete deleta o registro correspondende ao valor da variavel personToDelete e por fim
     //retorna uma mensagem informando que o registro foi deletado, caso contrario retorna uma exception.
-    public messageResponseDTO deletePerson(Long id) throws PersonNotFoundException {
+    public messageResponseDTO deleteCustomerById(Long id) throws PersonNotFoundException {
         Customer customerToDelete = verifyIfExists(id);
         customerRepository.delete(customerToDelete);
         return createMessageResponse(customerToDelete.getId(), "Deleted person with id ");
@@ -94,12 +94,18 @@ public class CustomerService {
         name = Objects.equals(name, "") ? "%":name;
         return customerRepository.searchPhysicalCustomer(dataCriacao,name,cpf,pageRequest);
     }
-    public Page<Customer>serachLegalCustomer(String dataCriacao, String name, String cpf, int page, int size){
+    public Page<Customer>serachLegalCustomer(String dataCriacao, String corporateName, String cnpj, int page, int size){
         PageRequest pageRequest = PageRequest.of(page,size, Sort.Direction.ASC,"CUTOMER_ID");
         dataCriacao = Objects.equals(dataCriacao, "") ? "%":dataCriacao;
-        cpf = Objects.equals(cpf, "") ? "%":cpf;
-        name = Objects.equals(name, "") ? "%":name;
-        return customerRepository.searchLegalCustomer(dataCriacao,name,cpf,pageRequest);
+        cnpj = Objects.equals(cnpj, "") ? "%":cnpj;
+        corporateName = Objects.equals(corporateName, "") ? "%":corporateName;
+        System.out.println(corporateName+cnpj+dataCriacao);
+        return customerRepository.searchLegalCustomer(dataCriacao,corporateName,cnpj,pageRequest);
+    }
+
+    public Page<Customer> findAll(int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page,size,Sort.Direction.ASC,"id");
+        return customerRepository.findAll(pageRequest);
     }
 
     //Pesquisa um registro correspondente ao id passado e retorna uma Person, caso contrario retorna uma exception.
@@ -128,5 +134,6 @@ public class CustomerService {
                 .build();
 
     }
+
 
 }
