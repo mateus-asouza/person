@@ -35,16 +35,16 @@ public class CustomerService {
     //Mapea personDto para Person atraves do metodo toModel do PersonMapper e armazena na variável personToSave,
     //persiste o objeto no banco de dados atraves so metodo personRepository.save passando o onjeto convertido como parametro e retorna uma messagem
     //infrmando que o registro foi criado.
-    public ResponseEntity createPerson(CustomerDto customerDto) {
+    public ResponseEntity createCustomer(CustomerDto customerDto) {
         Customer customerToSave = customerMapper.toModel(customerDto);
+        Optional<User> user = userRepository.findById(customerDto.getUserId());
         if(verifyIfExistsByExample(customerToSave)){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("The person already exists.\n");
         }else{
-            Optional<User> user = userRepository.findById(customerDto.getUserId());
             if(user.isEmpty()){
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("The user not found.\n");
             }
-            System.out.println(customerToSave.toString());
+            customerToSave.setUser(user.get());
             customerRepository.save(customerToSave);
             return ResponseEntity.status(HttpStatus.CREATED).body("Person created successfully.\n");
         }
@@ -56,8 +56,17 @@ public class CustomerService {
     public List<CustomerDto> listAll() {
         List<Customer> customerList = customerRepository.findAll();
         return customerList.stream().
-                map(customerMapper::toDTO).
+                map(customer -> {
+                    CustomerDto customerDto = customerMapper.toDTO(customer);
+                    Optional<User> user = Optional.ofNullable(customer.getUser());
+                    if(user.isEmpty()){
+                        return customerDto;
+                    }
+                    customerDto.setUserId(customer.getUser().getId());
+                    return customerDto;
+                }).
                 collect(Collectors.toList());
+
     }
 
     //Recebe um id, cria um a variável do tipo Person que recebe a chamda do metodo verifyIfExists passando o id,
@@ -99,7 +108,7 @@ public class CustomerService {
         dataCriacao = Objects.equals(dataCriacao, "") ? "%":dataCriacao;
         cnpj = Objects.equals(cnpj, "") ? "%":cnpj;
         corporateName = Objects.equals(corporateName, "") ? "%":corporateName;
-        System.out.println(corporateName+cnpj+dataCriacao);
+
         return customerRepository.searchLegalCustomer(dataCriacao,corporateName,cnpj,pageRequest);
     }
 

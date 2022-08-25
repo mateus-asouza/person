@@ -1,8 +1,6 @@
 package com.ms.personApi.controller;
 
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
 import com.ms.personApi.dto.request.CredentialsDto;
 import com.ms.personApi.entity.User;
 import com.ms.personApi.exception.InvalidCredentialsException;
@@ -27,7 +25,7 @@ public class LoginController {
     private UserRepository userRepository;
     private CredentialsService credentialsService;
 
-    @PostMapping
+    /*@PostMapping
     void login(@RequestBody CredentialsDto credentials, HttpServletResponse response) throws InvalidCredentialsException {
         Optional<User> maybeUser = userRepository.findByLogin(credentials.getLogin());
         if(maybeUser.isEmpty()){
@@ -47,5 +45,5 @@ public class LoginController {
         cookie.setHttpOnly(true);
         cookie.setMaxAge(60*30);
         response.addCookie(cookie);
-    }
+    }*/
 }

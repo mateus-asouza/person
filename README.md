@@ -1,6 +1,7 @@
 ## Descrição do Projeto
 - Uma API REST que permite cadastrar, atualizar, listar e deletar clientes do sistema.
-- Api upada na Heroku, url para acesso: https://ms-personapi-rest.herokuapp.com/api/v1/people
+- Possui sistema de autenticação e autorização com spring security e JWT.
+- Paginação e filtro configurados.
 
 ## Tecnologias Usadas
 - Maven versão 3.8.4.
@@ -8,6 +9,7 @@
 - MapStruct 1.3.1.Final
 - Java 11
 - Lombok 1.18.22
+- H2 Database
 
 ## Intalação do Projeto
 
@@ -32,11 +34,6 @@
 - Esse projeto utiliza a biblioteca do [lombok] para automatizar o processo de desevolvimento.
 - Para maiores informações sobre a configuração do lombok acesse https://projectlombok.org/
 
-## Utilização Mockito
-
-- Esse projeto utiliza a biblioteca do Mockito para testes unitários.
-- Para maiores informações sobre a
-  configurações https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html.
 
 ## Utilização MapStruct
 
@@ -53,36 +50,36 @@
 ## Metodos
 
 - ### POST
-    - Request (/api/v1/people)
+    - Request (/api/v1/customer)
         - Rquest Body
-      ```
-        {
-      "name": "Fulano",
-      "cpf": "643.862.870-00",
-      "birthDay": "14/04/1995",
-      "phones": [
-      {
-      "phoneNumber": "(62)999999999"
-      }
-      ],
-      "addresses": [
-      {
-      "cep": "74375500",
-      "street": "Rua das Camélias",
-      "number": 0,
-      "district":"Parque Oeste",
-      "city": "Goiânia",
-      "state": "GO"
-      }
-      ]
-      }
-      ```
-        - Response
-       ```
+```
        {
-        "message": "Created customer with ID 1"
-        }
-      ```
+  "phones":{
+  "phoneNumber" : ""
+  }
+  ,
+  "addresses":{
+  "cep":"",
+  "street":"",
+  "number":0,
+  "district":"",
+  "city":"",
+  "state":""
+  },
+  "dataCriacao":"",
+  "dataAlteracao":""
+  ,
+  "physicalCustomer":{
+  "cpf":"",
+  "name":"",
+  "birthDay":""
+  },
+
+  "userId":0
+
+}
+```
+       
 
 - ### GET
     - Request (/api/v1/customer)
@@ -92,29 +89,35 @@
 
 ```
      [
-    {
+     {
         "id": 1,
-        "name": "Fulano",
-        "cpf": "643.862.870-00",
-        "birthDay": "14/04/1995",
-        "phones": [
-            {
-                "id": 1,
-                "phoneNumber": "(62)999999999"
-            }
-        ],
-        "addresses": [
-            {
-                "id": 1,
-                "cep": "74375500",
-                "street": "Rua das Camélias",
-                "number": 0,
-                "district": "Parque Oeste",
-                "city": "Goiânia",
-                "state": "GO"
-            }
-        ]
-    }
+        "phones": {
+            "id": 3,
+            "phoneNumber": "62981184314"
+        },
+        "addresses": {
+            "id": 2,
+            "cep": "74484070",
+            "street": "rua tal",
+            "number": 475,
+            "district": "Parque Oeste",
+            "city": "Goiânia",
+            "state": "GO"
+        },
+        "dataCriacao": "18/08/2022",
+        "dataAlteracao": "",
+        "physicalCustomer": {
+            "cpf": "700.075.451-69",
+            "name": "Mateus Alves",
+            "birthDay": "14/04/1995"
+        },
+        "legalCustomer": {
+            "cnpj": "32.252.276/0001-53",
+            "corporateName": "Nair e Elza Limpeza ME",
+            "fantasyName": "Nair e Elza Limpeza ME"
+        },
+        "userId": 0
+    },
 ]
 ```
 
@@ -125,29 +128,35 @@
         - Response
 
 ```
-{
-    "id": 1,
-    "name": "Fulano",
-    "cpf": "643.862.870-00",
-    "birthDay": "14/04/1995",
-    "phones": [
-        {
-            "id": 1,
-            "phoneNumber": "(62)999999999"
-        }
-    ],
-    "addresses": [
-        {
-            "id": 1,
-            "cep": "74375500",
-            "street": "Rua das Camélias",
-            "number": 0,
+     {
+        "id": 1,
+        "phones": {
+            "id": 3,
+            "phoneNumber": "62981184314"
+        },
+        "addresses": {
+            "id": 2,
+            "cep": "74484070",
+            "street": "rua tal",
+            "number": 475,
             "district": "Parque Oeste",
             "city": "Goiânia",
             "state": "GO"
-        }
-    ]
-}
+        },
+        "dataCriacao": "18/08/2022",
+        "dataAlteracao": "",
+        "physicalCustomer": {
+            "cpf": "700.075.451-69",
+            "name": "Mateus Alves",
+            "birthDay": "14/04/1995"
+        },
+        "legalCustomer": {
+            "cnpj": "32.252.276/0001-53",
+            "corporateName": "Nair e Elza Limpeza ME",
+            "fantasyName": "Nair e Elza Limpeza ME"
+        },
+        "userId": 0
+    },
 
 ```
 
@@ -156,29 +165,35 @@
         - Rquest Body
 
 ```
-  {
+       {
         "id": 1,
-        "name": "Fulano de Tal",
-        "cpf": "756.293.000-75",
-        "birthDay": "14/04/1995",
-        "phones": [
-            {
-                "id": 1,
-                "phoneNumber": "(62)999999999"
-            }
-        ],
-        "addresses": [
-            {
-                "id": 1,
-                "cep": "74375500",
-                "street": "Rua das Camélias",
-                "number": 0,
-                "district": "Parque Oeste",
-                "city": "Goiânia",
-                "state": "GO"
-            }
-        ]
-    }
+        "phones": {
+            "id": 3,
+            "phoneNumber": "62981184314"
+        },
+        "addresses": {
+            "id": 2,
+            "cep": "74484070",
+            "street": "rua tal",
+            "number": 475,
+            "district": "Parque Oeste",
+            "city": "Goiânia",
+            "state": "GO"
+        },
+        "dataCriacao": "18/08/2022",
+        "dataAlteracao": "",
+        "physicalCustomer": {
+            "cpf": "700.075.451-69",
+            "name": "Mateus Alves",
+            "birthDay": "14/04/1995"
+        },
+        "legalCustomer": {
+            "cnpj": "32.252.276/0001-53",
+            "corporateName": "Nair e Elza Limpeza ME",
+            "fantasyName": "Nair e Elza Limpeza ME"
+        },
+        "userId": 0
+    },
 ```
 
 - Response
@@ -201,7 +216,66 @@
 }
 
 ```
+- ### GET
+    - Request (/api/v1/user)
+        - Rquest Body
 
+        - Response
+
+```
+     [
+    {
+        "id": 1,
+        "login": "mateus.souza@ojc.com.br",
+        "password": "$2a$10$yGbI1ucCgPfEKPJzrGYAq.bDQv.v3weW4ef7ihXKqeTTTMpz1CErW",
+        "securityGroups": [
+            {
+                "id": 2,
+                "name": "ADMIN",
+                "authority": "ADMIN"
+            }
+        ]
+    },
+]
+```
+- ### POST
+    - Request (/api/v1/user)
+        - Rquest Body
+
+```
+     [
+    {
+        
+        "login": "mateus.souza@ojc.com.br",
+        "password": "$2a$10$yGbI1ucCgPfEKPJzrGYAq.bDQv.v3weW4ef7ihXKqeTTTMpz1CErW",
+        "securityGroups": [
+            {
+ 
+                "name": "ADMIN",
+              
+            }
+        ]
+    },
+]
+```
+- ### POST
+    - Request (/api/v1/auth)
+        - Rquest Body
+
+```
+   {
+    "login":"mateus.souza@ojc.com.br",
+    "password":"ojc@2022"
+
+ }
+```
+- Response
+```
+{
+    "token": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBUEkgcHJvamV0byB0ZXN0ZSIsInN1YiI6IjEiLCJpYXQiOjE2NjE0MzkyODAsImV4cCI6MTY2MTUyNTY4MH0.Ca3PB_XkcHUFw2vptznpGqXk8D5JmY--OBZOFCMuhhs",
+    "type": "Bearer"
+}
+```
 ## Informações Uteis
 
 - @RestController: retorna o objeto e os dados do objeto são gravados diretamente na resposta HTTP como JSON.

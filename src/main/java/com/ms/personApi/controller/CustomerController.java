@@ -35,7 +35,7 @@ public class CustomerController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity createPerson(@RequestBody CustomerDto customerDto) {
 
-        return customerService.createPerson(customerDto);
+        return customerService.createCustomer(customerDto);
     }
 
     @GetMapping(value = "/search")
